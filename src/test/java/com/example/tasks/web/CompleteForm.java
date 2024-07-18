@@ -1,39 +1,35 @@
 package com.example.tasks.web;
 
 import com.example.userinterfaces.pages.CartPage;
+import com.example.utils.JsonDataReader;
+import io.restassured.path.json.JsonPath;
 import net.serenitybdd.screenplay.Actor;
-import net.serenitybdd.screenplay.Performable;
 import net.serenitybdd.screenplay.Task;
 import net.serenitybdd.screenplay.actions.Click;
 import net.serenitybdd.screenplay.actions.Enter;
+import org.json.JSONObject;
 
-import static net.serenitybdd.screenplay.Tasks.instrumented;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+import static java.lang.module.ModuleDescriptor.read;
 
 public class CompleteForm implements Task {
-    private final String userName;
-    private final String country;
-    private final String city;
-    private final String card;
-    private final String month;
-    private final String year;
 
-    public CompleteForm(String userName, String country, String city, String card, String month, String year) {
-        this.userName = userName;
-        this.country = country;
-        this.city = city;
-        this.card = card;
-        this.month = month;
-        this.year = year;
-    }
+    public static final String DATA = "src/test/resources/templates/users.json";
 
-    public static Performable withDates(String userName, String country, String city, String card, String month, String year) {
-        return instrumented(CompleteForm.class, userName, country, city,card, month, year);
-    }
-
+    private String userName;
+    private String country;
+    private String city;
+    private String card;
+    private String month;
+    private String year;
 
 
     @Override
     public <T extends Actor> void performAs(T actor) {
+        obtenerDatosjson();
         actor.attemptsTo(
                 Click.on(CartPage.PLACE_ORDER_BUTTON),
                 Enter.theValue(userName).into(CartPage.USERNAME_INPUT),
@@ -45,4 +41,14 @@ public class CompleteForm implements Task {
                 Click.on(CartPage.PURCHASE_BUTTON)
         );
     }
+
+    private void obtenerDatosjson() {
+        this.userName = JsonDataReader.getDataFromJson(DATA).getString("name");
+        this.country = JsonDataReader.getDataFromJson(DATA).getString("country");
+        this.card = JsonDataReader.getDataFromJson(DATA).getString("card");
+        this.city = JsonDataReader.getDataFromJson(DATA).getString("city");
+        this.month = JsonDataReader.getDataFromJson(DATA).getString("month");
+        this.year = JsonDataReader.getDataFromJson(DATA).getString("year");
+    }
+
 }

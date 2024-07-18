@@ -1,12 +1,15 @@
 @Comprar
   Feature: Compra de productos en la pagina demoblaze
-
+    Background:
     @TEST_COMPRA01
-    Scenario: Compra de 2 productos
+    Scenario Outline: Compra de 2 productos
       Given que el Usuario se encuentre en la pagina de demoblaze
-      When agrego dos productos al carrito
+      When agrego dos productos <NUMPRODUCT> al carrito
       Then visualizo que los productos esten en el carrito
-      And verifico que sean "Samsung galaxy s6", precio "360", y precio total de la compra es "720"
+      And verifico que sean "<PRODUCT>", precio "<PRICE>", y precio total de la compra es "<TOTALPRICE>"
       Then completo el formulario con la informacion:
-      And ingreso nombre:"standard_user", pais: "Ecuador", ciudad: "Quito", tarjeta: "1234", mes: "JUNIO", anio: "2030"
       And finalizo la compra
+      Examples:
+        |NUMPRODUCT| PRODUCT | PRICE | TOTALPRICE |
+        |1 |Samsung galaxy s6| 360 | 720 |
+        | 2 |Nokia lumia 1520| 820 |1640 |

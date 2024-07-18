@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.example</groupId>
-    <artifactId>ChallendeFinalE2E</artifactId>
+    <artifactId>ChallengeFinalE2E</artifactId>
     <version>1.0.0-SNAPSHOT</version>
 
     <name>Screenplay ChallendeFinalE2E</name>
@@ -130,6 +130,11 @@
             <version>1.0-beta</version>
         </dependency>
         <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20240303</version>
+        </dependency>
+        <dependency>
             <groupId>io.appium</groupId>
             <artifactId>java-client</artifactId>
             <version>8.5.1</version>
@@ -140,6 +145,7 @@
                 </exclusion>
             </exclusions>
         </dependency>
+
     </dependencies>
     <build>
         <plugins>

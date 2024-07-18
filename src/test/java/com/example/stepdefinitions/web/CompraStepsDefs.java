@@ -38,27 +38,24 @@ public class CompraStepsDefs {
         theActorCalled(actor).attemptsTo(
                 NavigateTo.demoblazePage()
         );
-        screenShot();
     }
 
-    @When("agrego dos productos al carrito")
-    public void agregoDosProductosAlCarrito() {
+    @When("agrego dos productos {int} al carrito")
+    public void agregoDosProductosAlCarrito(int idProducto) {
         theActorInTheSpotlight().attemptsTo(
-                new SelectProduct()
-                );
-        screenShot();
+                new SelectProduct(idProducto)
+        );
     }
 
     @Then("visualizo que los productos esten en el carrito")
     public void visualizoLosProductosEnElCarrito() {
         theActorInTheSpotlight().attemptsTo(new BuyProducts());
-        screenShot();
     }
     @And("verifico que sean {string}, precio {string}, y precio total de la compra es {string}")
-    public void precioTotalDeLaCompraEs(String nombreProducto1, String precioProducto, String Preciototal) {
+    public void precioTotalDeLaCompraEs(String nombreProducto, String precioProducto, String Preciototal) {
         theActorInTheSpotlight().should(
-                seeThat("El producto a comprar es", ProductQuestion.tituloProduct(), CoreMatchers.equalTo(nombreProducto1)),
-                seeThat("El producto2 a comprar es", ProductQuestion.tituloProduct2(), CoreMatchers.equalTo(nombreProducto1)),
+                seeThat("El producto a comprar es", ProductQuestion.tituloProduct(), CoreMatchers.equalTo(nombreProducto)),
+                seeThat("El producto 2 a comprar es", ProductQuestion.tituloProduct2(), CoreMatchers.equalTo(nombreProducto)),
                 seeThat("El precio del primer producto es:", ProductQuestion.priceProduct1(), CoreMatchers.equalTo(precioProducto)),
                 seeThat("El precio del segundo producto es:", ProductQuestion.priceProduct2(), CoreMatchers.equalTo(precioProducto)),
                 seeThat("El precio total de la compra es: ",ProductQuestion.totalPriceProducts(),CoreMatchers.equalTo(Preciototal))
@@ -67,26 +64,25 @@ public class CompraStepsDefs {
 
     @Then("completo el formulario con la informacion:")
     public void completoElFormularioConLaInformacion() {
+        theActorInTheSpotlight().attemptsTo(
+                new CompleteForm()
+        );
     }
-
+/*
     @And("ingreso nombre:{string}, pais: {string}, ciudad: {string}, tarjeta: {string}, mes: {string}, anio: {string}")
     public void ingresoNombrePaisCiudadTarjetaMesAnio(String nombre, String pais, String ciudad, String tarjeta, String mes, String anio) {
         theActorInTheSpotlight().attemptsTo(
                 CompleteForm.withDates(nombre, pais, ciudad, tarjeta, mes, anio)
         );
-        screenShot();
     }
+*/
     @And("finalizo la compra")
     public void finalizoLaCompra() {
         theActorInTheSpotlight().attemptsTo(
                 new CompleteBuy()
         );
-        screenShot();
     }
 
-    public void screenShot(){
-        byte[] evidencia = ((TakesScreenshot) BrowseTheWeb.as(theActorInTheSpotlight()).getDriver()).getScreenshotAs(OutputType.BYTES);
-        this.scenario.attach(evidencia, "image/png", "evidencias");
-    }
+
 
 }

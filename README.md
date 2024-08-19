@@ -41,7 +41,8 @@ mvn -U dependency:resolve
 - Se puede modificar el archivo JSON ubicado en `src/test/resources/templates/users.json` para poner los datos del cliente 
 segun corresponda
 
-## Visualizacion del reporte
+## Visualización del reporte
 - Para ver los reportes nos trasladamos al directorio `target/site/serenity/` y hacemos click derecho en el
   archivo `index.html`, luego, `Open in -> Browser` y elegimos nuestro navegador de preferencia.
   Ahi se podra ver el reporte más reciente de la ejecución
+- ![img.png](Reporte_E2E_SerenityBDD.png)
